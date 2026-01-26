@@ -3,6 +3,7 @@ import { BuildingInstance } from '../buildings/BuildingInstance';
 import { Sector } from '../grid/Sector';
 import { ConfigData } from '../config/types';
 import { CellType } from '../grid/Cell';
+import { LayoutStorage, SerializedStation, SerializedSector, SerializedBuilding } from '../storage/LayoutStorage';
 
 export enum PlacementMode {
   View = 'view',
@@ -24,6 +25,7 @@ export class AppState {
   highlightedBuildingId: string | null;
   roadStartPos: { row: number; col: number } | null;
   showInactiveIndicators: boolean = false;
+  isModalOpen: boolean = false;
 
   // Sector transition animation
   isTransitioning: boolean = false;
@@ -109,6 +111,7 @@ export class AppState {
       this.isTransitioning = false;
       this.transitionDirection = null;
       this.transitionProgress = 0;
+      this.triggerAutoSave();
     }
   }
 
@@ -216,11 +219,13 @@ export class AppState {
     );
 
     this.sector.addBuilding(instance);
+    this.triggerAutoSave();
     return instance;
   }
 
   deleteBuilding(buildingId: string): boolean {
     this.sector.deleteBuilding(buildingId);
+    this.triggerAutoSave();
     return true;
   }
 
@@ -257,6 +262,7 @@ export class AppState {
         }
       }
     }
+    this.triggerAutoSave();
   }
 
   startRoadPlacing(): void {
@@ -301,6 +307,7 @@ export class AppState {
         grid.cells[r][c].setRoad();
       }
     }
+    this.triggerAutoSave();
   }
 
   hasRoadsInLine(startRow: number, startCol: number, endRow: number, endCol: number): boolean {
@@ -329,6 +336,7 @@ export class AppState {
         }
       }
     }
+    this.triggerAutoSave();
   }
 
   private getRoadCells(startRow: number, startCol: number, endRow: number, endCol: number): Array<[number, number]> {
@@ -351,5 +359,99 @@ export class AppState {
     }
 
     return cells;
+  }
+
+  triggerAutoSave(): void {
+    const data = this.serializeAllSectors();
+    LayoutStorage.saveCurrentState(data);
+  }
+
+  private serializeSector(sectorIndex: number): SerializedSector {
+    const buildings: SerializedBuilding[] = this.sector.placedBuildings[sectorIndex].map(building => ({
+      id: building.id,
+      buildingName: building.building.name,
+      row: building.row,
+      col: building.col,
+      rotation: building.rotation
+    }));
+
+    const roads: Array<{ row: number; col: number }> = [];
+    const grid = this.sector.grids[sectorIndex];
+    for (let r = 0; r < 30; r++) {
+      for (let c = 0; c < 56; c++) {
+        if (grid.cells[r][c].data.type === CellType.Road) {
+          roads.push({ row: r, col: c });
+        }
+      }
+    }
+
+    return { buildings, roads };
+  }
+
+  serializeAllSectors(): SerializedStation {
+    const sectors: SerializedSector[] = [];
+    for (let i = 0; i < 6; i++) {
+      sectors.push(this.serializeSector(i));
+    }
+    return {
+      sectors,
+      currentSector: this.getSector()
+    };
+  }
+
+  loadStationData(data: SerializedStation): void {
+    // Clear all sectors first
+    for (let i = 0; i < 6; i++) {
+      this.sector.switchSector(i);
+      this.clearCurrentSector();
+    }
+
+    // Load each sector
+    for (let i = 0; i < 6; i++) {
+      this.sector.switchSector(i);
+      const sectorData = data.sectors[i];
+
+      // Deserialize buildings
+      for (const buildingData of sectorData.buildings) {
+        const building = this.buildings.get(buildingData.buildingName);
+        if (!building) {
+          console.warn(`Building definition not found: ${buildingData.buildingName}`);
+          continue;
+        }
+
+        const instance = new BuildingInstance(
+          buildingData.id,
+          building,
+          buildingData.row,
+          buildingData.col,
+          buildingData.rotation
+        );
+        this.sector.addBuilding(instance);
+      }
+
+      // Deserialize roads
+      const grid = this.sector.getCurrentGrid();
+      for (const roadData of sectorData.roads) {
+        if (roadData.row >= 0 && roadData.row < 30 && roadData.col >= 0 && roadData.col < 56) {
+          grid.cells[roadData.row][roadData.col].setRoad();
+        }
+      }
+    }
+
+    // Restore the saved current sector
+    this.sector.switchSector(data.currentSector - 1);
+    this.triggerAutoSave();
+  }
+
+  saveLayout(name: string): void {
+    const data = this.serializeAllSectors();
+    LayoutStorage.saveLayout(name, data);
+  }
+
+  loadLayout(id: string): void {
+    const savedLayout = LayoutStorage.loadLayout(id);
+    if (savedLayout) {
+      this.loadStationData(savedLayout.data);
+    }
   }
 }

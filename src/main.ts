@@ -4,6 +4,7 @@ import { AppState, PlacementMode } from './state/AppState';
 import { InputManager } from './input/InputManager';
 import { ConstructionMenu } from './ui/ConstructionMenu';
 import { SectorIndicator } from './ui/SectorIndicator';
+import { LayoutStorage } from './storage/LayoutStorage';
 
 let appState: AppState;
 let renderer: CanvasRenderer;
@@ -23,6 +24,13 @@ async function init(): Promise<void> {
     console.log('Config loaded:', config);
     appState.loadConfig(config);
     console.log('Buildings loaded:', appState.buildings);
+
+    // Restore autosaved state
+    const autosave = LayoutStorage.loadCurrentState();
+    if (autosave) {
+      console.log('Restoring autosaved state...');
+      appState.loadStationData(autosave);
+    }
 
     // Initialize renderer
     renderer = new CanvasRenderer('canvas');

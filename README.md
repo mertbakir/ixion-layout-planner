@@ -62,8 +62,7 @@ A web-based TypeScript application for planning building layouts across 6 sector
 | Key | Action |
 |-----|--------|
 | `1-6` | Switch to sector 1-6 |
-| `←/→` | Navigate to adjacent sectors (wraps around) |
-| `Q/E` | Navigate to adjacent sectors (alternate, with slide animation) |
+| `←/→` or `Q/E` | Navigate to adjacent sectors (wraps around) |
 | `C` | Toggle construction menu |
 | `R` | Rotate building (if placing) or start road building |
 | `X` (short) | Enter delete mode (stays active for multiple deletions) |
@@ -71,6 +70,8 @@ A web-based TypeScript application for planning building layouts across 6 sector
 | `T` | Toggle display of inactive adjacency connection indicators |
 | `ESC` | Cancel current operation, exit delete mode, clear menu selection |
 | `M` | Toggle background music mute/unmute |
+| `S` | Save current layout |
+| `L` | Load a saved layout |
 
 ## Project Structure
 

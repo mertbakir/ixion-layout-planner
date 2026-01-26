@@ -38,6 +38,25 @@
           </div>
         </div>
       </div>
+      <div id="save-layout-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Save Layout</h2>
+          <input type="text" id="layout-name-input" placeholder="Enter layout name..." />
+          <div class="modal-buttons">
+            <button id="save-cancel" class="modal-button modal-cancel">Cancel</button>
+            <button id="save-confirm" class="modal-button modal-confirm">Save</button>
+          </div>
+        </div>
+      </div>
+      <div id="load-layout-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2>Saved Layouts</h2>
+          <div id="layouts-list"></div>
+          <div class="modal-buttons">
+            <button id="load-close" class="modal-button modal-cancel">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <script type="module" src="/src/main.ts"></script>
