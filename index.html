@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ixion Layout Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <div class="header">
+        <h1>Ixion Layout Planner</h1>
+        <div class="info">
+          <span id="mode-indicator">View Mode</span>
+          <div class="sector-compass">
+            <canvas id="sector-canvas" width="80" height="80"></canvas>
+          </div>
+        </div>
+      </div>
+      <canvas id="canvas"></canvas>
+      <div id="construction-menu" class="construction-menu hidden">
+        <div class="menu-tabs" id="menu-tabs"></div>
+        <div class="menu-content">
+          <div id="buildings-list" class="buildings-list"></div>
+        </div>
+      </div>
+      <div id="confirmation-modal" class="confirmation-modal hidden">
+        <div class="confirmation-content">
+          <h2 id="confirmation-title">Confirm Action</h2>
+          <p id="confirmation-message">Are you sure?</p>
+          <div class="confirmation-buttons">
+            <button id="confirm-no" class="confirm-button confirm-no">No</button>
+            <button id="confirm-yes" class="confirm-button confirm-yes">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
