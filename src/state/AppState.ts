@@ -223,9 +223,11 @@ export class AppState {
     return instance;
   }
 
-  deleteBuilding(buildingId: string): boolean {
+  deleteBuilding(buildingId: string, silent: boolean = false): boolean {
     this.sector.deleteBuilding(buildingId);
-    this.triggerAutoSave();
+    if (!silent) {
+      this.triggerAutoSave();
+    }
     return true;
   }
 
@@ -246,12 +248,9 @@ export class AppState {
     this.roadStartPos = null;
   }
 
-  clearCurrentSector(): void {
-    // Delete all buildings in current sector
-    const buildingIds = this.placedBuildings.map(b => b.id);
-    for (const id of buildingIds) {
-      this.deleteBuilding(id);
-    }
+  clearCurrentSector(silent: boolean = false): void {
+    // Efficiently clear buildings
+    this.sector.clearBuildings();
 
     // Clear all roads in current sector
     const grid = this.sector.getCurrentGrid();
@@ -262,7 +261,10 @@ export class AppState {
         }
       }
     }
-    this.triggerAutoSave();
+    
+    if (!silent) {
+      this.triggerAutoSave();
+    }
   }
 
   startRoadPlacing(): void {
@@ -400,10 +402,10 @@ export class AppState {
   }
 
   loadStationData(data: SerializedStation): void {
-    // Clear all sectors first
+    // Clear all sectors first silently
     for (let i = 0; i < 6; i++) {
       this.sector.switchSector(i);
-      this.clearCurrentSector();
+      this.clearCurrentSector(true);
     }
 
     // Load each sector

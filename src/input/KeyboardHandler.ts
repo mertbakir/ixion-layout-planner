@@ -125,7 +125,7 @@ export class KeyboardHandler {
     document.addEventListener('keydown', (e: KeyboardEvent) => {
       // If a modal is open, let its own handler deal with it, but stop further propagation.
       if (this.appState.isModalOpen) {
-        e.stopPropagation();
+        e.stopImmediatePropagation();
         return;
       }
 

@@ -39,6 +39,10 @@ export class Sector {
     }
   }
 
+  clearBuildings(): void {
+    this.placedBuildings[this.currentSector] = [];
+  }
+
   switchSector(sectorNumber: number): boolean {
     if (sectorNumber >= 0 && sectorNumber < SECTOR_COUNT) {
       this.currentSector = sectorNumber;

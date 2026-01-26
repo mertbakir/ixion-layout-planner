@@ -180,30 +180,7 @@ npm run build   # Build for production
 - js-yaml (config parsing)
 - Poppins font (Google Fonts)
 
-## Recent Changes (Latest Session)
-
-- ✅ Fixed layout spacing (removed header gap, added scrolling support)
-- ✅ Soft pastel color palette for all buildings with consistent brightness
-- ✅ Auto-contrasting text color (black on light backgrounds, white on dark)
-- ✅ Thin borders with darker shade of building color
-- ✅ Road placing stays active after placement (press ESC to exit)
-- ✅ Darker green adjacency indicators for better visibility
-- ✅ Auto-hide inactive adjacency dots when connected (toggle with T key)
-- ✅ One-way delete mode (X to enter, ESC to exit only)
-- ✅ Long-press X to clear sector with confirmation modal
-- ✅ Normal cursor in view mode, crosshair when placing/building roads
-- ✅ Confirmation modal UI for destructive actions
-
-## TODO
-
-- [ ] Export/import layouts as JSON
-- [ ] Undo/redo functionality
-- [ ] Browser local storage persistence
-- [ ] Metrics display (total buildings, road length, etc.)
-- [ ] Keyboard shortcuts overlay
-- [ ] Settings panel (volume control, animation speed, etc.)
-
-## Notes for Next Developer
+## Notes for the developer
 
 - **Sector independence**: All 6 sectors are completely isolated - buildings and roads don't affect other sectors
 - **State management**: AppState is a singleton holding current sector and transition animation state
@@ -216,3 +193,8 @@ npm run build   # Build for production
 - **Road placement**: Stays in road mode after placement, only ESC returns to view mode
 - **Colors**: All building colors are designed with consistent perceptual brightness (OKLCH-inspired). Building borders are darkened by 35% of the building color
 - **Sector animation**: Q/E directions are reversed from arrow keys for intuitive feel (Q pushes right, E pushes left)
+
+## TODO
+
+- [ ] Metrics display (total buildings, road length, etc.)
+- [ ] Keyboard shortcuts overlay

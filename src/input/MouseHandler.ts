@@ -32,6 +32,8 @@ export class MouseHandler {
   }
 
   private handleClick(e: MouseEvent): void {
+    if (this.appState.isModalOpen) return;
+
     const rect = this.canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -90,6 +92,12 @@ export class MouseHandler {
   }
 
   private handleMouseMove(e: MouseEvent): void {
+    if (this.appState.isModalOpen) {
+      this.lastMousePos = null;
+      this.appState.highlightedBuildingId = null;
+      return;
+    }
+
     const rect = this.canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
