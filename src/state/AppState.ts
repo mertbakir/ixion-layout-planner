@@ -121,6 +121,10 @@ export class AppState {
 
   startPlacing(buildingName: string): void {
     if (this.buildings.has(buildingName)) {
+      // Cancel any active delete mode
+      if (this.mode === PlacementMode.RoadDeleting) {
+        this.roadStartPos = null;
+      }
       this.mode = PlacementMode.Placing;
       this.selectedBuildingName = buildingName;
       this.selectedRotation = 0;
@@ -268,8 +272,15 @@ export class AppState {
   }
 
   startRoadPlacing(): void {
-    this.mode = PlacementMode.RoadPlacing;
-    this.roadStartPos = null;
+    // Only switch to road placing if not already in delete mode
+    // (pressing R in delete mode should exit delete mode)
+    if (this.mode === PlacementMode.RoadDeleting) {
+      this.mode = PlacementMode.View;
+      this.roadStartPos = null;
+    } else {
+      this.mode = PlacementMode.RoadPlacing;
+      this.roadStartPos = null;
+    }
   }
 
   startRoadDeleting(): void {

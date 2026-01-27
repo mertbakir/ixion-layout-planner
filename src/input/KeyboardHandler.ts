@@ -39,9 +39,17 @@ export class KeyboardHandler {
 
     // Construction menu (C)
     this.handlers.set('c', () => {
+      // Cancel delete mode if active
+      if (this.appState.mode === PlacementMode.RoadDeleting) {
+        this.appState.mode = PlacementMode.View;
+      }
       this.toggleConstructionMenu();
     });
     this.handlers.set('C', () => {
+      // Cancel delete mode if active
+      if (this.appState.mode === PlacementMode.RoadDeleting) {
+        this.appState.mode = PlacementMode.View;
+      }
       this.toggleConstructionMenu();
     });
 
