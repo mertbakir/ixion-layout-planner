@@ -58,6 +58,119 @@
         </div>
       </div>
     </div>
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="shortcuts-modal" class="shortcuts-modal hidden">
+      <div class="shortcuts-modal-content">
+        <div class="shortcuts-header">
+          <span class="shortcuts-title">Keyboard Shortcuts</span>
+        </div>
+        <div class="keyboard-container">
+          <!-- Row 1: Esc, F1-F12 -->
+          <div class="keyboard-row">
+            <div class="key active-key" data-key="Esc" data-action="Close / Cancel">Esc</div>
+            <div class="key-spacer"></div>
+            <div class="key">F1</div>
+            <div class="key">F2</div>
+            <div class="key">F3</div>
+            <div class="key">F4</div>
+            <div class="key">F5</div>
+            <div class="key">F6</div>
+            <div class="key">F7</div>
+            <div class="key">F8</div>
+            <div class="key">F9</div>
+            <div class="key">F10</div>
+            <div class="key">F11</div>
+            <div class="key">F12</div>
+          </div>
+          <!-- Row 2: Numbers -->
+          <div class="keyboard-row">
+            <div class="key">`</div>
+            <div class="key active-key" data-key="1" data-action="Sector 1">1</div>
+            <div class="key active-key" data-key="2" data-action="Sector 2">2</div>
+            <div class="key active-key" data-key="3" data-action="Sector 3">3</div>
+            <div class="key active-key" data-key="4" data-action="Sector 4">4</div>
+            <div class="key active-key" data-key="5" data-action="Sector 5">5</div>
+            <div class="key active-key" data-key="6" data-action="Sector 6">6</div>
+            <div class="key">7</div>
+            <div class="key">8</div>
+            <div class="key">9</div>
+            <div class="key">0</div>
+            <div class="key">-</div>
+            <div class="key">=</div>
+            <div class="key backspace">⌫</div>
+          </div>
+          <!-- Row 3: Tab, Q-P -->
+          <div class="keyboard-row">
+            <div class="key tab">Tab</div>
+            <div class="key active-key" data-key="Q" data-action="Sector ←">Q</div>
+            <div class="key">W</div>
+            <div class="key active-key" data-key="E" data-action="Sector →">E</div>
+            <div class="key active-key" data-key="R" data-action="Rotate / Road">R</div>
+            <div class="key active-key" data-key="T" data-action="Indicators">T</div>
+            <div class="key">Y</div>
+            <div class="key">U</div>
+            <div class="key">I</div>
+            <div class="key">O</div>
+            <div class="key">P</div>
+            <div class="key">[</div>
+            <div class="key">]</div>
+            <div class="key">\</div>
+          </div>
+          <!-- Row 4: Caps, A-L -->
+          <div class="keyboard-row">
+            <div class="key caps">Caps</div>
+            <div class="key">A</div>
+            <div class="key active-key" data-key="S" data-action="Save Layout">S</div>
+            <div class="key">D</div>
+            <div class="key">F</div>
+            <div class="key">G</div>
+            <div class="key">H</div>
+            <div class="key">J</div>
+            <div class="key">K</div>
+            <div class="key active-key" data-key="L" data-action="Load Layout">L</div>
+            <div class="key">;</div>
+            <div class="key">'</div>
+            <div class="key enter">Enter</div>
+          </div>
+          <!-- Row 5: Shift, Z-M -->
+          <div class="keyboard-row">
+            <div class="key shift">Shift</div>
+            <div class="key">Z</div>
+            <div class="key active-key" data-key="X" data-action="Delete Mode">X</div>
+            <div class="key active-key" data-key="C" data-action="Build Menu">C</div>
+            <div class="key">V</div>
+            <div class="key">B</div>
+            <div class="key">N</div>
+            <div class="key active-key" data-key="M" data-action="Music">M</div>
+            <div class="key">,</div>
+            <div class="key">.</div>
+            <div class="key active-key" data-key="?" data-action="Shortcuts">?</div>
+            <div class="key shift">Shift</div>
+          </div>
+          <!-- Row 6: Space + Arrow Cluster -->
+          <div class="keyboard-row">
+            <div class="key"></div>
+            <div class="key ctrl">Ctrl</div>
+            <div class="key alt">Alt</div>
+            <div class="key command">Cmd</div>
+            <div class="key space">Space</div>
+            <div class="key command">Cmd</div>
+            <div class="key alt">Alt</div>
+            <div style="flex-grow: 1;"></div>
+            <div class="arrow-cluster">
+              <div class="arrow-row-top">
+                <div class="key arrow-key">↑</div>
+              </div>
+              <div class="arrow-row-bottom">
+                <div class="key active-key arrow-key" data-key="←" data-action="Sector ←">←</div>
+                <div class="key arrow-key">↓</div>
+                <div class="key active-key arrow-key" data-key="→" data-action="Sector →">→</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script type="module" src="/src/main.ts"></script>
 </body>

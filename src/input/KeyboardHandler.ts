@@ -2,6 +2,7 @@ import { AppState, PlacementMode } from '../state/AppState';
 import { BackgroundMusic } from '../audio/BackgroundMusic';
 import { LayoutStorage } from '../storage/LayoutStorage';
 import { NameGenerator } from '../utils/NameGenerator';
+import { ShortcutsModal } from '../ui/ShortcutsModal';
 
 type KeyHandler = () => void;
 
@@ -12,6 +13,7 @@ export class KeyboardHandler {
   private appState: AppState;
   private backgroundMusic: BackgroundMusic;
   private xPressStartTime: number | null = null;
+  private shortcutsModal: ShortcutsModal | null = null;
 
   constructor(appState: AppState, backgroundMusic: BackgroundMusic) {
     this.appState = appState;
@@ -19,6 +21,10 @@ export class KeyboardHandler {
     this.handlers = new Map();
     this.setupHandlers();
     this.attachListeners();
+    // Initialize shortcuts modal after DOM is ready
+    setTimeout(() => {
+      this.shortcutsModal = new ShortcutsModal();
+    }, 0);
   }
 
   private setupHandlers(): void {
@@ -119,10 +125,29 @@ export class KeyboardHandler {
     this.handlers.set('L', () => {
       this.showLoadLayoutModal();
     });
+
+    // Shortcuts modal (?)
+    this.handlers.set('?', () => {
+      if (this.shortcutsModal) {
+        this.shortcutsModal.toggle();
+      }
+    });
   }
 
   private attachListeners(): void {
     document.addEventListener('keydown', (e: KeyboardEvent) => {
+      // Handle shortcuts modal: visual feedback and ESC close
+      if (this.shortcutsModal?.getIsOpen()) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          this.shortcutsModal.close();
+          return;
+        }
+        // Provide visual feedback for keypresses
+        this.shortcutsModal.updateKeyVisualFeedback(e.key, true);
+        return;
+      }
+
       // If a modal is open, let its own handler deal with it, but stop further propagation.
       if (this.appState.isModalOpen) {
         e.stopImmediatePropagation();
@@ -150,6 +175,12 @@ export class KeyboardHandler {
     });
 
     document.addEventListener('keyup', (e: KeyboardEvent) => {
+      // Clear visual feedback in shortcuts modal
+      if (this.shortcutsModal?.getIsOpen()) {
+        this.shortcutsModal.updateKeyVisualFeedback(e.key, false);
+        return;
+      }
+
       // If a modal is open, do nothing.
       if (this.appState.isModalOpen) {
         return;

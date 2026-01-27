@@ -451,3 +451,200 @@ canvas {
   background-color: #dd0000;
   border-color: #dd0000;
 }
+
+/* --- Keyboard Shortcuts Modal --- */
+
+.shortcuts-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.shortcuts-modal.hidden {
+  display: none;
+}
+
+.shortcuts-modal-content {
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 95vw;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.shortcuts-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.shortcuts-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* --- Visual Keyboard --- */
+
+.keyboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 20px 0;
+  user-select: none;
+  transform: scale(0.9);
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.keyboard-row:first-child {
+  justify-content: flex-start;
+  padding-left: 0;
+}
+
+.key {
+  width: 40px;
+  height: 40px;
+  background: #1a1a1a;
+  color: #666;
+  border: 1px solid #333;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+  font-size: 0.8rem;
+  box-shadow: 0 4px 0 #222;
+  position: relative;
+  transition: all 0.1s ease;
+  cursor: default;
+  opacity: 0.7;
+}
+
+/* Specific Key Sizes */
+.key.tab { width: 60px; align-items: flex-start; padding-left: 8px; }
+.key.caps { width: 70px; align-items: flex-start; padding-left: 8px; }
+.key.shift { width: 95px; align-items: flex-start; padding-left: 8px; }
+.key.enter { width: 85px; align-items: flex-end; padding-right: 8px; }
+.key.backspace { width: 60px; }
+.key.space { width: 250px; }
+.key.ctrl, .key.alt, .key.command { width: 50px; font-size: 0.7rem; }
+
+/* Arrow Keys */
+.key.arrow-key {
+  width: 40px;
+  height: 20px;
+  min-width: 40px;
+}
+
+/* Spacer after Esc key */
+.key-spacer {
+  width: 24px;
+}
+
+/* Arrow cluster */
+.arrow-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.arrow-row-top {
+  display: flex;
+  justify-content: center;
+}
+
+.arrow-row-bottom {
+  display: flex;
+  gap: 6px;
+}
+
+/* Active Keys - Highlighted shortcuts */
+.key.active-key {
+  background: #00cc44;
+  color: #000;
+  border-color: #00aa33;
+  box-shadow: 0 4px 0 #008822;
+  opacity: 1;
+  font-weight: bold;
+  cursor: default;
+  z-index: 2;
+}
+
+/* Chat Balloon (Tooltip) */
+.key.active-key::after {
+  content: attr(data-action);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  padding: 8px 14px;
+  background: #f0f0f0;
+  color: #00aa33;
+  border: 1px solid rgba(0, 204, 68, 0.3);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+/* Balloon Arrow */
+.key.active-key::before {
+  content: '';
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  opacity: 0;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 10;
+}
+
+/* Show balloon permanently for visual map */
+.key.active-key::after,
+.key.active-key::before {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  bottom: 125%;
+}
+
+/* Tooltip adjustments to prevent overlap */
+.key[data-key="R"]::after { transform: translateX(-90%) scale(1); }
+.key[data-key="T"]::after { transform: translateX(-10%) scale(1); }
+.key[data-key="Q"]::after { transform: translateX(-70%) scale(1); }
+.key[data-key="E"]::after { transform: translateX(-30%) scale(1); }
+
+/* Focus Effect: Dim others when hovering or simulating hover on an active key */
+.keyboard-container:has(.active-key:hover, .active-key.simulated-hover) .key.active-key:not(:hover):not(.simulated-hover)::after,
+.keyboard-container:has(.active-key:hover, .active-key.simulated-hover) .key.active-key:not(:hover):not(.simulated-hover)::before {
+  opacity: 0.2;
+  filter: grayscale(0.5) blur(1px);
+}
+
+/* Simulated hover effect for keypress feedback */
+.key.active-key.simulated-hover {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #008822;
+}
