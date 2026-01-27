@@ -197,5 +197,4 @@ npm run build   # Build for production
 ## TODO
 
 - [ ] Metrics display (total buildings, road length, empty cells etc.)
-- [ ] Keyboard shortcuts overlay
 - [ ] Add optimal layouts in the app, and always display in Load, not allowing to delete.
