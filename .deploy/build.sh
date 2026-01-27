@@ -4,7 +4,4 @@ set -e
 echo "Building application..."
 npm run build
 
-echo "Copying config.yaml to dist..."
-cp config.yaml dist/config.yaml
-
-echo "Build complete!"
+echo "Build complete! Output in dist/ directory"
