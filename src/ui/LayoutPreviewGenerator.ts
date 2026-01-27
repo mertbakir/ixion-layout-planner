@@ -1,10 +1,10 @@
 import { SavedLayout, SerializedBuilding, SerializedSector } from '../storage/LayoutStorage';
 
 export class LayoutPreviewGenerator {
-  private static readonly PREVIEW_WIDTH = 600;
-  private static readonly PREVIEW_HEIGHT = 100;
-  private static readonly SECTOR_WIDTH = 100;
-  private static readonly CELL_SIZE = 10;
+  private static readonly PREVIEW_WIDTH = 360;
+  private static readonly PREVIEW_HEIGHT = 60;
+  private static readonly SECTOR_WIDTH = 60;
+  private static readonly CELL_SIZE = 6;
   private static readonly GRID_SIZE = 10; // 10x10 cells per sector
 
   private static previewCache: Map<string, string> = new Map();

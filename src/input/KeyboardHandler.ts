@@ -510,8 +510,18 @@ export class KeyboardHandler {
 
       // Position tooltip near item
       const rect = item.getBoundingClientRect();
-      previewTooltip.style.left = (rect.right + 10) + 'px';
-      previewTooltip.style.top = rect.top + 'px';
+      const tooltipWidth = 360 + 12; // preview width + padding
+      const rightPosition = rect.right + 10;
+
+      // Check if tooltip would go off-screen to the right
+      let left = rightPosition;
+      if (rightPosition + tooltipWidth > window.innerWidth) {
+        // Position to the left of the item instead
+        left = Math.max(10, rect.left - tooltipWidth - 10);
+      }
+
+      previewTooltip.style.left = left + 'px';
+      previewTooltip.style.top = Math.max(10, rect.top - 10) + 'px';
     });
 
     item.addEventListener('mouseleave', () => {
