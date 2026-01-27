@@ -19,10 +19,10 @@ export interface SerializedStation {
 export interface SavedLayoutMetadata {
   id: string;
   name: string;
-  timestamp: number;
-  source?: 'repository' | 'user';
+  timestamp?: number;
   author?: string;
   description?: string;
+  referenceUrl?: string;
 }
 
 export interface SavedLayout {
@@ -140,14 +140,9 @@ export class LayoutStorage {
     const layout = this.loadLayout(layoutId);
     if (!layout) return;
 
-    // Add export metadata
+    // Export layout as-is
     const exportData: SavedLayout = {
-      ...layout,
-      metadata: {
-        ...layout.metadata,
-        source: 'user',
-        exportedAt: Date.now()
-      } as SavedLayoutMetadata & { exportedAt?: number }
+      ...layout
     };
 
     // Create blob and trigger download

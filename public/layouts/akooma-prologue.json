@@ -1,0 +1,809 @@
+{
+  "metadata": {
+    "id": "layout_1769540919805_t2qzdtxtr",
+    "name": "akooma - prologue",
+    "referenceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2912295573"
+  },
+  "data": {
+    "sectors": [
+      {
+        "buildings": [
+          {
+            "id": "building_1769540586225_p2ju0kju0",
+            "buildingName": "Probe Launcher",
+            "row": 0,
+            "col": 0,
+            "rotation": 2
+          },
+          {
+            "id": "building_1769540595523_7mjn5vrei",
+            "buildingName": "EVA Airlock",
+            "row": 0,
+            "col": 44,
+            "rotation": 2
+          },
+          {
+            "id": "building_1769540599624_600nj2uc4",
+            "buildingName": "Docking Bay",
+            "row": 0,
+            "col": 32,
+            "rotation": 2
+          },
+          {
+            "id": "building_1769540744706_r1d9ah5oo",
+            "buildingName": "Tech Lab",
+            "row": 11,
+            "col": 46,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540782589_s3uzcrrcy",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 1,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540784039_itjcofyx3",
+            "buildingName": "Quarters",
+            "row": 14,
+            "col": 1,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540785272_b446in4oz",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 4,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540786154_azirjoylh",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 7,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540787538_agxp91tmq",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 10,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540788442_07mwohza4",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 13,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540794509_du31ub4oo",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 19,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540796006_rpn0g6dcr",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 22,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540796938_b2abvlj53",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 25,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540804273_f94kgl9kz",
+            "buildingName": "Infirmary",
+            "row": 14,
+            "col": 16,
+            "rotation": 1
+          },
+          {
+            "id": "building_1769540814873_kd925q1wg",
+            "buildingName": "Workshop",
+            "row": 10,
+            "col": 13,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540817976_2rhf2kndb",
+            "buildingName": "Stockpile",
+            "row": 10,
+            "col": 17,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540819256_uy56zkmda",
+            "buildingName": "Stockpile",
+            "row": 10,
+            "col": 21,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540820222_zs6ke1cwu",
+            "buildingName": "Stockpile",
+            "row": 10,
+            "col": 25,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540821290_2i5mjosnn",
+            "buildingName": "Stockpile",
+            "row": 10,
+            "col": 29,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540822505_4gu4dhzrl",
+            "buildingName": "Stockpile",
+            "row": 10,
+            "col": 33,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540867428_7857rdluc",
+            "buildingName": "Insect Farm",
+            "row": 21,
+            "col": 18,
+            "rotation": 3
+          },
+          {
+            "id": "building_1769540868388_9ao4zh6zi",
+            "buildingName": "Insect Farm",
+            "row": 21,
+            "col": 22,
+            "rotation": 3
+          },
+          {
+            "id": "building_1769540869289_kh3acmisx",
+            "buildingName": "Insect Farm",
+            "row": 21,
+            "col": 26,
+            "rotation": 3
+          },
+          {
+            "id": "building_1769540875588_8lrbu9iis",
+            "buildingName": "Quarters",
+            "row": 17,
+            "col": 28,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769540981572_8dry0baa6",
+            "buildingName": "Mess Hall",
+            "row": 5,
+            "col": 25,
+            "rotation": 2
+          }
+        ],
+        "roads": [
+          {
+            "row": 2,
+            "col": 24
+          },
+          {
+            "row": 3,
+            "col": 24
+          },
+          {
+            "row": 4,
+            "col": 24
+          },
+          {
+            "row": 5,
+            "col": 24
+          },
+          {
+            "row": 6,
+            "col": 24
+          },
+          {
+            "row": 7,
+            "col": 24
+          },
+          {
+            "row": 8,
+            "col": 24
+          },
+          {
+            "row": 9,
+            "col": 0
+          },
+          {
+            "row": 9,
+            "col": 1
+          },
+          {
+            "row": 9,
+            "col": 2
+          },
+          {
+            "row": 9,
+            "col": 3
+          },
+          {
+            "row": 9,
+            "col": 4
+          },
+          {
+            "row": 9,
+            "col": 5
+          },
+          {
+            "row": 9,
+            "col": 6
+          },
+          {
+            "row": 9,
+            "col": 7
+          },
+          {
+            "row": 9,
+            "col": 8
+          },
+          {
+            "row": 9,
+            "col": 9
+          },
+          {
+            "row": 9,
+            "col": 10
+          },
+          {
+            "row": 9,
+            "col": 11
+          },
+          {
+            "row": 9,
+            "col": 12
+          },
+          {
+            "row": 9,
+            "col": 13
+          },
+          {
+            "row": 9,
+            "col": 14
+          },
+          {
+            "row": 9,
+            "col": 15
+          },
+          {
+            "row": 9,
+            "col": 16
+          },
+          {
+            "row": 9,
+            "col": 17
+          },
+          {
+            "row": 9,
+            "col": 18
+          },
+          {
+            "row": 9,
+            "col": 19
+          },
+          {
+            "row": 9,
+            "col": 20
+          },
+          {
+            "row": 9,
+            "col": 21
+          },
+          {
+            "row": 9,
+            "col": 22
+          },
+          {
+            "row": 9,
+            "col": 23
+          },
+          {
+            "row": 9,
+            "col": 24
+          },
+          {
+            "row": 9,
+            "col": 25
+          },
+          {
+            "row": 9,
+            "col": 26
+          },
+          {
+            "row": 9,
+            "col": 27
+          },
+          {
+            "row": 9,
+            "col": 28
+          },
+          {
+            "row": 9,
+            "col": 29
+          },
+          {
+            "row": 9,
+            "col": 30
+          },
+          {
+            "row": 9,
+            "col": 31
+          },
+          {
+            "row": 9,
+            "col": 32
+          },
+          {
+            "row": 9,
+            "col": 33
+          },
+          {
+            "row": 9,
+            "col": 34
+          },
+          {
+            "row": 9,
+            "col": 35
+          },
+          {
+            "row": 9,
+            "col": 36
+          },
+          {
+            "row": 9,
+            "col": 37
+          },
+          {
+            "row": 9,
+            "col": 38
+          },
+          {
+            "row": 9,
+            "col": 39
+          },
+          {
+            "row": 9,
+            "col": 40
+          },
+          {
+            "row": 9,
+            "col": 41
+          },
+          {
+            "row": 9,
+            "col": 42
+          },
+          {
+            "row": 9,
+            "col": 43
+          },
+          {
+            "row": 9,
+            "col": 44
+          },
+          {
+            "row": 9,
+            "col": 45
+          },
+          {
+            "row": 9,
+            "col": 46
+          },
+          {
+            "row": 9,
+            "col": 47
+          },
+          {
+            "row": 9,
+            "col": 48
+          },
+          {
+            "row": 9,
+            "col": 49
+          },
+          {
+            "row": 9,
+            "col": 50
+          },
+          {
+            "row": 9,
+            "col": 51
+          },
+          {
+            "row": 9,
+            "col": 52
+          },
+          {
+            "row": 9,
+            "col": 53
+          },
+          {
+            "row": 9,
+            "col": 54
+          },
+          {
+            "row": 9,
+            "col": 55
+          },
+          {
+            "row": 10,
+            "col": 0
+          },
+          {
+            "row": 10,
+            "col": 37
+          },
+          {
+            "row": 10,
+            "col": 55
+          },
+          {
+            "row": 11,
+            "col": 0
+          },
+          {
+            "row": 11,
+            "col": 37
+          },
+          {
+            "row": 11,
+            "col": 55
+          },
+          {
+            "row": 12,
+            "col": 0
+          },
+          {
+            "row": 12,
+            "col": 37
+          },
+          {
+            "row": 12,
+            "col": 55
+          },
+          {
+            "row": 13,
+            "col": 0
+          },
+          {
+            "row": 13,
+            "col": 37
+          },
+          {
+            "row": 13,
+            "col": 55
+          },
+          {
+            "row": 14,
+            "col": 0
+          },
+          {
+            "row": 14,
+            "col": 37
+          },
+          {
+            "row": 14,
+            "col": 55
+          },
+          {
+            "row": 15,
+            "col": 0
+          },
+          {
+            "row": 15,
+            "col": 37
+          },
+          {
+            "row": 15,
+            "col": 55
+          },
+          {
+            "row": 16,
+            "col": 0
+          },
+          {
+            "row": 16,
+            "col": 37
+          },
+          {
+            "row": 16,
+            "col": 55
+          },
+          {
+            "row": 17,
+            "col": 0
+          },
+          {
+            "row": 17,
+            "col": 37
+          },
+          {
+            "row": 17,
+            "col": 55
+          },
+          {
+            "row": 18,
+            "col": 0
+          },
+          {
+            "row": 18,
+            "col": 37
+          },
+          {
+            "row": 18,
+            "col": 55
+          },
+          {
+            "row": 19,
+            "col": 0
+          },
+          {
+            "row": 19,
+            "col": 37
+          },
+          {
+            "row": 19,
+            "col": 55
+          },
+          {
+            "row": 20,
+            "col": 0
+          },
+          {
+            "row": 20,
+            "col": 1
+          },
+          {
+            "row": 20,
+            "col": 2
+          },
+          {
+            "row": 20,
+            "col": 3
+          },
+          {
+            "row": 20,
+            "col": 4
+          },
+          {
+            "row": 20,
+            "col": 5
+          },
+          {
+            "row": 20,
+            "col": 6
+          },
+          {
+            "row": 20,
+            "col": 7
+          },
+          {
+            "row": 20,
+            "col": 8
+          },
+          {
+            "row": 20,
+            "col": 9
+          },
+          {
+            "row": 20,
+            "col": 10
+          },
+          {
+            "row": 20,
+            "col": 11
+          },
+          {
+            "row": 20,
+            "col": 12
+          },
+          {
+            "row": 20,
+            "col": 13
+          },
+          {
+            "row": 20,
+            "col": 14
+          },
+          {
+            "row": 20,
+            "col": 15
+          },
+          {
+            "row": 20,
+            "col": 16
+          },
+          {
+            "row": 20,
+            "col": 17
+          },
+          {
+            "row": 20,
+            "col": 18
+          },
+          {
+            "row": 20,
+            "col": 19
+          },
+          {
+            "row": 20,
+            "col": 20
+          },
+          {
+            "row": 20,
+            "col": 21
+          },
+          {
+            "row": 20,
+            "col": 22
+          },
+          {
+            "row": 20,
+            "col": 23
+          },
+          {
+            "row": 20,
+            "col": 24
+          },
+          {
+            "row": 20,
+            "col": 25
+          },
+          {
+            "row": 20,
+            "col": 26
+          },
+          {
+            "row": 20,
+            "col": 27
+          },
+          {
+            "row": 20,
+            "col": 28
+          },
+          {
+            "row": 20,
+            "col": 29
+          },
+          {
+            "row": 20,
+            "col": 30
+          },
+          {
+            "row": 20,
+            "col": 31
+          },
+          {
+            "row": 20,
+            "col": 32
+          },
+          {
+            "row": 20,
+            "col": 33
+          },
+          {
+            "row": 20,
+            "col": 34
+          },
+          {
+            "row": 20,
+            "col": 35
+          },
+          {
+            "row": 20,
+            "col": 36
+          },
+          {
+            "row": 20,
+            "col": 37
+          },
+          {
+            "row": 20,
+            "col": 38
+          },
+          {
+            "row": 20,
+            "col": 39
+          },
+          {
+            "row": 20,
+            "col": 40
+          },
+          {
+            "row": 20,
+            "col": 41
+          },
+          {
+            "row": 20,
+            "col": 42
+          },
+          {
+            "row": 20,
+            "col": 43
+          },
+          {
+            "row": 20,
+            "col": 44
+          },
+          {
+            "row": 20,
+            "col": 45
+          },
+          {
+            "row": 20,
+            "col": 46
+          },
+          {
+            "row": 20,
+            "col": 47
+          },
+          {
+            "row": 20,
+            "col": 48
+          },
+          {
+            "row": 20,
+            "col": 49
+          },
+          {
+            "row": 20,
+            "col": 50
+          },
+          {
+            "row": 20,
+            "col": 51
+          },
+          {
+            "row": 20,
+            "col": 52
+          },
+          {
+            "row": 20,
+            "col": 53
+          },
+          {
+            "row": 20,
+            "col": 54
+          },
+          {
+            "row": 20,
+            "col": 55
+          }
+        ]
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      }
+    ],
+    "currentSector": 1
+  }
+}

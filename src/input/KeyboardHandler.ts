@@ -2,7 +2,6 @@ import { AppState, PlacementMode } from '../state/AppState';
 import { BackgroundMusic } from '../audio/BackgroundMusic';
 import { LayoutStorage } from '../storage/LayoutStorage';
 import { RepositoryLayoutLoader } from '../storage/RepositoryLayoutLoader';
-import { LayoutPreviewGenerator } from '../ui/LayoutPreviewGenerator';
 import { NameGenerator } from '../utils/NameGenerator';
 import { ShortcutsModal } from '../ui/ShortcutsModal';
 
@@ -209,11 +208,22 @@ export class KeyboardHandler {
         if (this.xPressStartTime) {
           const pressDuration = Date.now() - this.xPressStartTime;
           if (pressDuration >= LONG_PRESS_DURATION) {
-            // Long press: show confirmation modal for clearing sector (stay in delete mode)
+            // Long press: show confirmation modal for clearing sectors with options
             this.showConfirmationModal(
               'Clear Sector',
-              'Clear all buildings and roads in the current sector?',
-              () => this.appState.clearCurrentSector()
+              'What would you like to clear?',
+              undefined,
+              {
+                cancel: () => {
+                  // Do nothing, just close the modal
+                },
+                current: () => {
+                  this.appState.clearCurrentSector();
+                },
+                all: () => {
+                  this.appState.clearAllSectors();
+                }
+              }
             );
           } else {
             // Short press: toggle to delete mode or between road modes
@@ -231,15 +241,22 @@ export class KeyboardHandler {
     });
   }
 
-  private showConfirmationModal(title: string, message: string, onConfirm: () => void): void {
+  private showConfirmationModal(
+    title: string,
+    message: string,
+    onConfirm?: () => void,
+    buttons?: { cancel?: () => void; current?: () => void; all?: () => void }
+  ): void {
     this.appState.isModalOpen = true;
     const modal = document.getElementById('confirmation-modal');
     const modalTitle = document.getElementById('confirmation-title');
     const modalMessage = document.getElementById('confirmation-message');
     const confirmYes = document.getElementById('confirm-yes');
-    const confirmNo = document.getElementById('confirm-no');
+    const confirmCancel = document.getElementById('confirm-cancel');
+    const confirmCurrent = document.getElementById('confirm-current');
+    const confirmAll = document.getElementById('confirm-all');
 
-    if (!modal || !modalTitle || !modalMessage || !confirmYes || !confirmNo) {
+    if (!modal || !modalTitle || !modalMessage || !confirmYes || !confirmCancel || !confirmCurrent || !confirmAll) {
       this.appState.isModalOpen = false;
       return;
     }
@@ -247,21 +264,38 @@ export class KeyboardHandler {
     modalTitle.textContent = title;
     modalMessage.textContent = message;
 
+    // Determine which mode we're in (legacy Yes/No or sector clearing)
+    const isSectorMode = buttons !== undefined;
+
+    // Hide all buttons initially
+    confirmYes.classList.add('hidden');
+    confirmCancel.classList.add('hidden');
+    confirmCurrent.classList.add('hidden');
+    confirmAll.classList.add('hidden');
+
+    // Define handlers
+    const handleCancel = () => {
+      buttons?.cancel?.();
+      closeModal();
+    };
+
+    const handleCurrent = () => {
+      buttons?.current?.();
+      closeModal();
+    };
+
+    const handleAll = () => {
+      buttons?.all?.();
+      closeModal();
+    };
+
     const handleYes = () => {
-      onConfirm();
+      onConfirm?.();
       closeModal();
     };
 
     const handleNo = () => {
       closeModal();
-    };
-
-    const closeModal = () => {
-      this.appState.isModalOpen = false;
-      modal.classList.add('hidden');
-      confirmYes.removeEventListener('click', handleYes);
-      confirmNo.removeEventListener('click', handleNo);
-      document.removeEventListener('keydown', handleEscape, true);
     };
 
     const handleEscape = (e: KeyboardEvent) => {
@@ -271,10 +305,37 @@ export class KeyboardHandler {
       }
     };
 
-    confirmYes.addEventListener('click', handleYes);
-    confirmNo.addEventListener('click', handleNo);
-    document.addEventListener('keydown', handleEscape, true); // Use capture phase
+    const closeModal = () => {
+      this.appState.isModalOpen = false;
+      modal.classList.add('hidden');
+      // Remove all event listeners
+      confirmCancel.removeEventListener('click', handleCancel);
+      confirmCancel.removeEventListener('click', handleNo);
+      confirmCurrent.removeEventListener('click', handleCurrent);
+      confirmAll.removeEventListener('click', handleAll);
+      confirmYes.removeEventListener('click', handleYes);
+      document.removeEventListener('keydown', handleEscape, true);
+    };
 
+    if (isSectorMode && buttons) {
+      // Sector clearing mode: show Cancel, Current Sector, All Sectors
+      confirmCancel.classList.remove('hidden');
+      confirmCurrent.classList.remove('hidden');
+      confirmAll.classList.remove('hidden');
+
+      confirmCancel.addEventListener('click', handleCancel);
+      confirmCurrent.addEventListener('click', handleCurrent);
+      confirmAll.addEventListener('click', handleAll);
+    } else {
+      // Legacy mode: show Cancel and Yes
+      confirmCancel.classList.remove('hidden');
+      confirmYes.classList.remove('hidden');
+
+      confirmCancel.addEventListener('click', handleNo);
+      confirmYes.addEventListener('click', handleYes);
+    }
+
+    document.addEventListener('keydown', handleEscape, true); // Use capture phase
     modal.classList.remove('hidden');
   }
 
@@ -383,7 +444,7 @@ export class KeyboardHandler {
       repoLayouts.sort((a, b) => a.metadata.name.localeCompare(b.metadata.name));
 
       // Sort user layouts by timestamp (newest first)
-      userLayouts.sort((a, b) => b.metadata.timestamp - a.metadata.timestamp);
+      userLayouts.sort((a, b) => (b.metadata.timestamp ?? 0) - (a.metadata.timestamp ?? 0));
 
       const hasRepoLayouts = repoLayouts.length > 0;
       const hasUserLayouts = userLayouts.length > 0;
@@ -463,22 +524,36 @@ export class KeyboardHandler {
     name.className = 'layout-name';
     name.textContent = layout.metadata.name;
 
-    const date = document.createElement('div');
-    date.className = 'layout-date';
-    date.textContent = new Date(layout.metadata.timestamp).toLocaleString();
-
     info.appendChild(name);
-    info.appendChild(date);
+
+    // Only show date if timestamp exists
+    if (layout.metadata.timestamp) {
+      const date = document.createElement('div');
+      date.className = 'layout-date';
+      date.textContent = new Date(layout.metadata.timestamp).toLocaleString();
+      info.appendChild(date);
+    }
 
     const actions = document.createElement('div');
     actions.className = 'layout-actions';
+
+    // Add reference button if URL exists (on the left)
+    if (layout.metadata.referenceUrl) {
+      const referenceBtn = document.createElement('button');
+      referenceBtn.className = 'layout-button layout-reference';
+      referenceBtn.textContent = 'Reference';
+      referenceBtn.addEventListener('click', () => {
+        window.open(layout.metadata.referenceUrl, '_blank');
+      });
+      actions.appendChild(referenceBtn);
+    }
 
     const loadBtn = document.createElement('button');
     loadBtn.className = 'layout-button layout-load';
     loadBtn.textContent = 'Load';
     loadBtn.addEventListener('click', () => {
       closeModal();
-      this.loadLayoutWithConfirmation(layout.metadata.id);
+      this.loadLayoutWithConfirmation(layout.metadata.id, layout);
     });
     actions.appendChild(loadBtn);
 
@@ -504,55 +579,21 @@ export class KeyboardHandler {
     item.appendChild(info);
     item.appendChild(actions);
 
-    // Add preview hover functionality
-    let previewTooltip: HTMLElement | null = null;
-
-    item.addEventListener('mouseenter', () => {
-      const previewUrl = LayoutPreviewGenerator.generatePreview(layout);
-      if (!previewUrl) return;
-
-      previewTooltip = document.createElement('div');
-      previewTooltip.className = 'layout-preview-tooltip';
-
-      const img = document.createElement('img');
-      img.src = previewUrl;
-      img.alt = `Preview of ${layout.metadata.name}`;
-
-      previewTooltip.appendChild(img);
-      document.body.appendChild(previewTooltip);
-
-      // Position tooltip near item
-      const rect = item.getBoundingClientRect();
-      const tooltipWidth = 360 + 12; // preview width + padding
-      const rightPosition = rect.right + 10;
-
-      // Check if tooltip would go off-screen to the right
-      let left = rightPosition;
-      if (rightPosition + tooltipWidth > window.innerWidth) {
-        // Position to the left of the item instead
-        left = Math.max(10, rect.left - tooltipWidth - 10);
-      }
-
-      previewTooltip.style.left = left + 'px';
-      previewTooltip.style.top = Math.max(10, rect.top - 10) + 'px';
-    });
-
-    item.addEventListener('mouseleave', () => {
-      if (previewTooltip && previewTooltip.parentNode) {
-        previewTooltip.parentNode.removeChild(previewTooltip);
-        previewTooltip = null;
-      }
-    });
-
     container.appendChild(item);
   }
 
-  private loadLayoutWithConfirmation(layoutId: string): void {
+  private loadLayoutWithConfirmation(layoutId: string, layoutData?: any): void {
     this.showConfirmationModal(
       'Load Layout',
       'Load this layout? This will replace your current layout.',
       () => {
-        this.appState.loadLayout(layoutId);
+        if (layoutData) {
+          // For repository layouts or when we have the full layout object
+          this.appState.loadStationData(layoutData.data);
+        } else {
+          // For user layouts stored in localStorage
+          this.appState.loadLayout(layoutId);
+        }
       }
     );
   }

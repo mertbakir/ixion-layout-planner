@@ -287,6 +287,37 @@ export class AppState {
     }
   }
 
+  clearAllSectors(silent: boolean = false): void {
+    // Save current sector
+    const currentSectorNum = this.getSector();
+
+    // Clear all sectors
+    for (let i = 0; i < 6; i++) {
+      this.sector.switchSector(i);
+
+      // Efficiently clear buildings
+      this.sector.clearBuildings();
+
+      // Clear all roads in sector
+      const grid = this.sector.getCurrentGrid();
+      for (let r = 0; r < 30; r++) {
+        for (let c = 0; c < 56; c++) {
+          if (grid.cells[r][c].data.type === CellType.Road) {
+            grid.cells[r][c].clear();
+          }
+        }
+      }
+    }
+
+    // Restore current sector
+    this.sector.switchSector(currentSectorNum - 1);
+    this.history = [];
+
+    if (!silent) {
+      this.triggerAutoSave();
+    }
+  }
+
   startRoadPlacing(): void {
     // Only switch to road placing if not already in delete mode
     // (pressing R in delete mode should exit delete mode)
@@ -490,8 +521,8 @@ export class AppState {
       }
     }
 
-    // Restore the saved current sector
-    this.sector.switchSector(data.currentSector - 1);
+    // Start from sector 1
+    this.sector.switchSector(0);
     this.triggerAutoSave();
   }
 

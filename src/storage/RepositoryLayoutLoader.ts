@@ -28,9 +28,6 @@ export class RepositoryLayoutLoader {
             continue;
           }
 
-          // Ensure source is marked as repository
-          layout.metadata.source = 'repository';
-
           layouts.push(layout);
         } catch (e) {
           console.error(`Error processing layout ${path}:`, e);
