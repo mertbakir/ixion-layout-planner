@@ -58,18 +58,31 @@ export class LayoutStorage {
   static saveLayout(name: string, data: SerializedStation): void {
     try {
       const layouts = this.getAllLayouts();
-      const id = `layout_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const existingIndex = layouts.findIndex(l => l.metadata.name === name);
 
-      const newLayout: SavedLayout = {
-        metadata: {
-          id,
-          name,
-          timestamp: Date.now()
-        },
-        data
-      };
+      if (existingIndex !== -1) {
+        // Override existing layout with same name
+        layouts[existingIndex] = {
+          metadata: {
+            ...layouts[existingIndex].metadata,
+            timestamp: Date.now()
+          },
+          data
+        };
+      } else {
+        // Create new layout
+        const id = `layout_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        const newLayout: SavedLayout = {
+          metadata: {
+            id,
+            name,
+            timestamp: Date.now()
+          },
+          data
+        };
+        layouts.push(newLayout);
+      }
 
-      layouts.push(newLayout);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(layouts));
     } catch (e) {
       if (e instanceof Error && e.name === 'QuotaExceededError') {

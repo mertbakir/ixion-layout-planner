@@ -38,20 +38,18 @@ export class KeyboardHandler {
     }
 
     // Construction menu (C)
-    this.handlers.set('c', () => {
-      // Cancel delete mode if active
-      if (this.appState.mode === PlacementMode.RoadDeleting) {
-        this.appState.mode = PlacementMode.View;
+    const handleC = () => {
+      if (this.appState.mode === PlacementMode.Placing) {
+        this.appState.cancelPlacement();
+      } else {
+        if (this.appState.mode === PlacementMode.RoadDeleting) {
+          this.appState.mode = PlacementMode.View;
+        }
+        this.toggleConstructionMenu();
       }
-      this.toggleConstructionMenu();
-    });
-    this.handlers.set('C', () => {
-      // Cancel delete mode if active
-      if (this.appState.mode === PlacementMode.RoadDeleting) {
-        this.appState.mode = PlacementMode.View;
-      }
-      this.toggleConstructionMenu();
-    });
+    };
+    this.handlers.set('c', handleC);
+    this.handlers.set('C', handleC);
 
     // Rotate building or build road (R)
     this.handlers.set('r', () => {
@@ -71,11 +69,17 @@ export class KeyboardHandler {
 
     // Cancel (ESC)
     this.handlers.set('Escape', () => {
-      this.appState.cancelPlacement();
-      this.appState.mode = PlacementMode.View;
-      this.appState.roadStartPos = null;
-      this.clearMenuSelection();
-      this.closeConstructionMenu();
+      if (this.appState.mode === PlacementMode.Placing) {
+        // Cancel placement but keep menu open
+        this.appState.cancelPlacement();
+        this.clearMenuSelection();
+      } else {
+        // Exit other modes and close menu
+        this.appState.mode = PlacementMode.View;
+        this.appState.roadStartPos = null;
+        this.clearMenuSelection();
+        this.closeConstructionMenu();
+      }
     });
 
     // Delete mode (X) - one way, only exit with ESC
@@ -134,6 +138,14 @@ export class KeyboardHandler {
     });
     this.handlers.set('L', () => {
       this.showLoadLayoutModal();
+    });
+
+    // Undo last placement (Z)
+    this.handlers.set('z', () => {
+      this.appState.undo();
+    });
+    this.handlers.set('Z', () => {
+      this.appState.undo();
     });
 
     // Shortcuts modal (?)

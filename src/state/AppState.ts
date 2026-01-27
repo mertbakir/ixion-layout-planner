@@ -26,6 +26,7 @@ export class AppState {
   roadStartPos: { row: number; col: number } | null;
   showInactiveIndicators: boolean = false;
   isModalOpen: boolean = false;
+  placementHistory: string[] = [];
 
   // Sector transition animation
   isTransitioning: boolean = false;
@@ -223,6 +224,7 @@ export class AppState {
     );
 
     this.sector.addBuilding(instance);
+    this.placementHistory.push(id);
     this.triggerAutoSave();
     return instance;
   }
@@ -265,7 +267,9 @@ export class AppState {
         }
       }
     }
-    
+
+    this.placementHistory = [];
+
     if (!silent) {
       this.triggerAutoSave();
     }
@@ -419,6 +423,8 @@ export class AppState {
       this.clearCurrentSector(true);
     }
 
+    this.placementHistory = [];
+
     // Load each sector
     for (let i = 0; i < 6; i++) {
       this.sector.switchSector(i);
@@ -466,5 +472,15 @@ export class AppState {
     if (savedLayout) {
       this.loadStationData(savedLayout.data);
     }
+  }
+
+  undo(): void {
+    if (this.placementHistory.length === 0) {
+      return;
+    }
+
+    const buildingId = this.placementHistory.pop()!;
+    this.deleteBuilding(buildingId, true);
+    this.triggerAutoSave();
   }
 }
