@@ -120,7 +120,30 @@ function renderNormal(): void {
   } else if (appState.mode === PlacementMode.RoadPlacing && appState.roadStartPos) {
     const mousePos = inputManager.getMouseGridPos();
     if (mousePos) {
+      const snappedPos = appState.snapRoadEnd(
+        appState.roadStartPos.row,
+        appState.roadStartPos.col,
+        mousePos.row,
+        mousePos.col
+      );
       const canPlace = appState.canPlaceRoad(
+        appState.roadStartPos.row,
+        appState.roadStartPos.col,
+        snappedPos.row,
+        snappedPos.col
+      );
+      renderer.renderRoadPreview(
+        appState.roadStartPos.row,
+        appState.roadStartPos.col,
+        snappedPos.row,
+        snappedPos.col,
+        false
+      );
+    }
+  } else if (appState.mode === PlacementMode.RoadDeleting && appState.roadStartPos) {
+    const mousePos = inputManager.getMouseGridPos();
+    if (mousePos) {
+      const snappedPos = appState.snapRoadEnd(
         appState.roadStartPos.row,
         appState.roadStartPos.col,
         mousePos.row,
@@ -129,19 +152,8 @@ function renderNormal(): void {
       renderer.renderRoadPreview(
         appState.roadStartPos.row,
         appState.roadStartPos.col,
-        mousePos.row,
-        mousePos.col,
-        false
-      );
-    }
-  } else if (appState.mode === PlacementMode.RoadDeleting && appState.roadStartPos) {
-    const mousePos = inputManager.getMouseGridPos();
-    if (mousePos) {
-      renderer.renderRoadPreview(
-        appState.roadStartPos.row,
-        appState.roadStartPos.col,
-        mousePos.row,
-        mousePos.col,
+        snappedPos.row,
+        snappedPos.col,
         true
       );
     }

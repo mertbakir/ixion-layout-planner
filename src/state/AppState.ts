@@ -13,6 +13,12 @@ export enum PlacementMode {
   RoadDeleting = 'roadDeleting'
 }
 
+type HistoryEntry =
+  | { type: 'placeBuilding'; buildingId: string }
+  | { type: 'deleteBuilding'; building: BuildingInstance }
+  | { type: 'placeRoad'; startRow: number; startCol: number; endRow: number; endCol: number }
+  | { type: 'deleteRoad'; cells: Array<[number, number]> };
+
 export class AppState {
   private static instance: AppState;
 
@@ -26,7 +32,7 @@ export class AppState {
   roadStartPos: { row: number; col: number } | null;
   showInactiveIndicators: boolean = false;
   isModalOpen: boolean = false;
-  placementHistory: string[] = [];
+  private history: HistoryEntry[] = [];
 
   // Sector transition animation
   isTransitioning: boolean = false;
@@ -224,16 +230,22 @@ export class AppState {
     );
 
     this.sector.addBuilding(instance);
-    this.placementHistory.push(id);
+    this.history.push({ type: 'placeBuilding', buildingId: id });
     this.triggerAutoSave();
     return instance;
   }
 
-  deleteBuilding(buildingId: string, silent: boolean = false): boolean {
+  deleteBuilding(buildingId: string, trackHistory: boolean = true): boolean {
+    // Find the building before deletion so we can store it in history
+    const building = this.placedBuildings.find(b => b.id === buildingId);
+
     this.sector.deleteBuilding(buildingId);
-    if (!silent) {
-      this.triggerAutoSave();
+
+    if (trackHistory && building) {
+      this.history.push({ type: 'deleteBuilding', building });
     }
+
+    this.triggerAutoSave();
     return true;
   }
 
@@ -268,7 +280,7 @@ export class AppState {
       }
     }
 
-    this.placementHistory = [];
+    this.history = [];
 
     if (!silent) {
       this.triggerAutoSave();
@@ -324,6 +336,8 @@ export class AppState {
         grid.cells[r][c].setRoad();
       }
     }
+
+    this.history.push({ type: 'placeRoad', startRow, startCol, endRow, endCol });
     this.triggerAutoSave();
   }
 
@@ -341,19 +355,38 @@ export class AppState {
     return false;
   }
 
-  deleteRoad(startRow: number, startCol: number, endRow: number, endCol: number): void {
+  deleteRoad(startRow: number, startCol: number, endRow: number, endCol: number, trackHistory: boolean = true): void {
     const grid = this.sector.getCurrentGrid();
     const cells = this.getRoadCells(startRow, startCol, endRow, endCol);
+    const deletedCells: Array<[number, number]> = [];
 
     for (const [r, c] of cells) {
       if (r >= 0 && r < 30 && c >= 0 && c < 56) {
         const cell = grid.cells[r][c];
         if (cell.data.type === CellType.Road) {
+          deletedCells.push([r, c]);
           cell.clear();
         }
       }
     }
+
+    if (trackHistory && deletedCells.length > 0) {
+      this.history.push({ type: 'deleteRoad', cells: deletedCells });
+    }
+
     this.triggerAutoSave();
+  }
+
+  snapRoadEnd(startRow: number, startCol: number, endRow: number, endCol: number): { row: number; col: number } {
+    const rowDiff = Math.abs(endRow - startRow);
+    const colDiff = Math.abs(endCol - startCol);
+
+    // Snap to the axis with more movement
+    if (colDiff >= rowDiff) {
+      return { row: startRow, col: endCol };
+    } else {
+      return { row: endRow, col: startCol };
+    }
   }
 
   private getRoadCells(startRow: number, startCol: number, endRow: number, endCol: number): Array<[number, number]> {
@@ -423,7 +456,7 @@ export class AppState {
       this.clearCurrentSector(true);
     }
 
-    this.placementHistory = [];
+    this.history = [];
 
     // Load each sector
     for (let i = 0; i < 6; i++) {
@@ -475,12 +508,37 @@ export class AppState {
   }
 
   undo(): void {
-    if (this.placementHistory.length === 0) {
+    if (this.history.length === 0) {
       return;
     }
 
-    const buildingId = this.placementHistory.pop()!;
-    this.deleteBuilding(buildingId, true);
-    this.triggerAutoSave();
+    const entry = this.history.pop()!;
+
+    switch (entry.type) {
+      case 'placeBuilding':
+        this.deleteBuilding(entry.buildingId, false);
+        break;
+
+      case 'deleteBuilding':
+        this.sector.addBuilding(entry.building);
+        this.triggerAutoSave();
+        break;
+
+      case 'placeRoad':
+        // Remove the road that was placed (don't track this deletion)
+        this.deleteRoad(entry.startRow, entry.startCol, entry.endRow, entry.endCol, false);
+        break;
+
+      case 'deleteRoad':
+        // Restore the deleted road cells
+        const grid = this.sector.getCurrentGrid();
+        for (const [r, c] of entry.cells) {
+          if (r >= 0 && r < 30 && c >= 0 && c < 56) {
+            grid.cells[r][c].setRoad();
+          }
+        }
+        this.triggerAutoSave();
+        break;
+    }
   }
 }

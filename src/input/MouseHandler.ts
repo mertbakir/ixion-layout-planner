@@ -54,11 +54,17 @@ export class MouseHandler {
       if (!this.appState.roadStartPos) {
         this.appState.roadStartPos = { row, col };
       } else {
-        this.appState.placeRoad(
+        const snappedEnd = this.appState.snapRoadEnd(
           this.appState.roadStartPos.row,
           this.appState.roadStartPos.col,
           row,
           col
+        );
+        this.appState.placeRoad(
+          this.appState.roadStartPos.row,
+          this.appState.roadStartPos.col,
+          snappedEnd.row,
+          snappedEnd.col
         );
         this.soundManager.playSound();
         // Reset road start position but stay in road placing mode
@@ -78,11 +84,17 @@ export class MouseHandler {
       if (!this.appState.roadStartPos) {
         this.appState.roadStartPos = { row, col };
       } else {
-        this.appState.deleteRoad(
+        const snappedEnd = this.appState.snapRoadEnd(
           this.appState.roadStartPos.row,
           this.appState.roadStartPos.col,
           row,
           col
+        );
+        this.appState.deleteRoad(
+          this.appState.roadStartPos.row,
+          this.appState.roadStartPos.col,
+          snappedEnd.row,
+          snappedEnd.col
         );
         this.soundManager.playSound();
         // Reset road start position but stay in delete mode

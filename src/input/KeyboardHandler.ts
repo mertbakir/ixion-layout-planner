@@ -30,23 +30,13 @@ export class KeyboardHandler {
   }
 
   private setupHandlers(): void {
-    // Sector switching (1-6)
-    for (let i = 1; i <= 6; i++) {
-      this.handlers.set(String(i), () => {
-        this.appState.switchSector(i);
-      });
-    }
 
-    // Construction menu (C)
+    // Construction menu (C) - toggles menu without changing placement mode
     const handleC = () => {
-      if (this.appState.mode === PlacementMode.Placing) {
-        this.appState.cancelPlacement();
-      } else {
-        if (this.appState.mode === PlacementMode.RoadDeleting) {
-          this.appState.mode = PlacementMode.View;
-        }
-        this.toggleConstructionMenu();
+      if (this.appState.mode === PlacementMode.RoadDeleting) {
+        this.appState.mode = PlacementMode.View;
       }
+      this.toggleConstructionMenu();
     };
     this.handlers.set('c', handleC);
     this.handlers.set('C', handleC);
@@ -55,14 +45,22 @@ export class KeyboardHandler {
     this.handlers.set('r', () => {
       if (this.appState.mode === PlacementMode.Placing) {
         this.appState.rotateSelectedBuilding();
-      } else if (this.appState.mode !== PlacementMode.RoadPlacing && this.appState.mode !== PlacementMode.RoadDeleting) {
+      } else if (this.appState.mode === PlacementMode.RoadDeleting) {
+        // Toggle from delete mode to road placing mode
+        this.appState.startRoadPlacing();
+      } else if (this.appState.mode !== PlacementMode.RoadPlacing) {
+        // Enter road placing mode
         this.appState.startRoadPlacing();
       }
     });
     this.handlers.set('R', () => {
       if (this.appState.mode === PlacementMode.Placing) {
         this.appState.rotateSelectedBuilding();
-      } else if (this.appState.mode !== PlacementMode.RoadPlacing && this.appState.mode !== PlacementMode.RoadDeleting) {
+      } else if (this.appState.mode === PlacementMode.RoadDeleting) {
+        // Toggle from delete mode to road placing mode
+        this.appState.startRoadPlacing();
+      } else if (this.appState.mode !== PlacementMode.RoadPlacing) {
+        // Enter road placing mode
         this.appState.startRoadPlacing();
       }
     });
@@ -74,11 +72,10 @@ export class KeyboardHandler {
         this.appState.cancelPlacement();
         this.clearMenuSelection();
       } else {
-        // Exit other modes and close menu
+        // Exit other modes but leave menu as is
         this.appState.mode = PlacementMode.View;
         this.appState.roadStartPos = null;
         this.clearMenuSelection();
-        this.closeConstructionMenu();
       }
     });
 
@@ -219,8 +216,12 @@ export class KeyboardHandler {
               () => this.appState.clearCurrentSector()
             );
           } else {
-            // Short press: enter delete mode (one-way, ESC to exit)
-            if (this.appState.mode !== PlacementMode.RoadPlacing && this.appState.mode !== PlacementMode.Placing) {
+            // Short press: toggle to delete mode or between road modes
+            if (this.appState.mode === PlacementMode.RoadPlacing) {
+              // Toggle from road placing to road deleting
+              this.appState.startRoadDeleting();
+            } else if (this.appState.mode !== PlacementMode.RoadDeleting && this.appState.mode !== PlacementMode.Placing) {
+              // Enter delete mode
               this.appState.startRoadDeleting();
             }
           }
