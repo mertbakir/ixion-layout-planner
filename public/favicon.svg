@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background -->
+  <rect width="64" height="64" fill="#f8f9fa" rx="8"/>
+
+  <!-- Grid base (representing layout planning) -->
+  <g stroke="#4f46e5" stroke-width="1.5" fill="none">
+    <!-- Horizontal lines -->
+    <line x1="8" y1="16" x2="56" y2="16"/>
+    <line x1="8" y1="32" x2="56" y2="32"/>
+    <line x1="8" y1="48" x2="56" y2="48"/>
+    <!-- Vertical lines -->
+    <line x1="16" y1="8" x2="16" y2="56"/>
+    <line x1="32" y1="8" x2="32" y2="56"/>
+    <line x1="48" y1="8" x2="48" y2="56"/>
+  </g>
+
+  <!-- Puzzle pieces (representing modularity) -->
+  <!-- Top-left piece -->
+  <g fill="#4f46e5">
+    <path d="M 8 8 L 24 8 L 24 13 Q 24 16 21 16 Q 18 16 18 19 L 18 24 L 8 24 Z"/>
+  </g>
+
+  <!-- Top-right piece with accent -->
+  <g fill="#7c3aed">
+    <path d="M 48 8 L 56 8 L 56 24 L 48 24 L 48 19 Q 48 16 51 16 Q 54 16 54 13 Z"/>
+  </g>
+
+  <!-- Bottom-left piece -->
+  <g fill="#7c3aed">
+    <path d="M 8 48 L 18 48 L 18 45 Q 18 42 21 42 Q 24 42 24 39 L 24 40 L 8 40 Z"/>
+  </g>
+
+  <!-- Bottom-right piece (missing - gap to show layout) -->
+  <g stroke="#4f46e5" stroke-width="2" fill="none" stroke-dasharray="4,2">
+    <rect x="40" y="40" width="16" height="16" rx="1"/>
+  </g>
+</svg>
