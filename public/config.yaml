@@ -1,0 +1,346 @@
+buildings:
+  space:
+    - name: Probe Launcher
+      requires-wall: true
+      size: 9x12
+      adjacency:
+        t: [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+        l: 0
+        r: 0
+        b: 0
+      color: "#8FA3D1"
+    - name: Docking Bay
+      requires-wall: true
+      size: 9x12
+      adjacency:
+        t: [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+        l: 0
+        r: 0
+        b: 0
+      color: "#B8C8D8"
+    - name: EVA Airlock
+      requires-wall: true
+      size: 9x12
+      adjacency:
+        t: [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
+        l: 0
+        r: 0
+        b: 0
+      color: "#9BA8D0"
+    - name: Nuclear Power Plant
+      size: 9x9
+      adjacency:
+        t: 1
+        l: 0
+        r: 0
+        b: 0
+      color: "#D9A565"
+    - name: Tech Lab
+      size: 9x9
+      adjacency:
+        t: 1
+        l: 0
+        r: 0
+        b: 0
+      color: "#9B88D3"
+    - name: Colonization Center
+      size: 9x9
+      adjacency:
+        t: 1
+        l: 0
+        r: 0
+        b: 0
+      color: "#A5B5E0"
+
+  stability:
+    - name: Memorials
+      size: 7x7
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#D9B8E8"
+    - name: Legislative Center
+      size: 6x6
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#D9CCBB"
+    - name: Fire Station
+      size: 6x6
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#F0B5A8"
+    - name: Alternative Life
+      size: 5x6
+      adjacency:
+        t: 1
+        l: 0
+        r: 0
+        b: 0
+      color: "#F0D4B8"
+    - name: DLS Center
+      size: 5x7
+      adjacency:
+        t: 0
+        l: 0
+        r: 1
+        b: 0
+      color: "#E8D9C8"
+
+
+  factories:
+    - name: Fusion Station
+      size: 6x12
+      adjacency:
+        t: 0
+        l: 0
+        r: 1
+        b: 0
+      color: "#D9A565"
+    - name: Steel Mill
+      size: 9x12
+      adjacency:
+        t: 0
+        r: 1
+        l: 0
+        b: 0
+      color: "#D4C4B4"
+    - name: Electronics Factory
+      size: 6x15
+      adjacency:
+        t: 1
+        r: 0
+        l: 0
+        b: 0
+      color: "#D0C5E0"
+    - name: Polymer Refinery
+      size: 6x9
+      adjacency:
+        t: 1
+        r: 0
+        l: 0
+        b: 0
+      color: "#E8D9C0"
+    - name: Waste Center
+      size: 9x9
+      adjacency:
+        t: 1
+        l: 0
+        r: 0
+        b: 0
+      color: "#D3D3D3"
+
+
+  food:
+    - name: Insect Farm
+      size: 4x8
+      adjacency:
+        t: 0
+        r: 1
+        l: 0
+        b: 0
+      color: "#A8D5A8"
+    - name: Crop Farm
+      size: 3x6
+      adjacency:
+        t: 0
+        r: 1
+        l: 0
+        b: 0
+      color: "#B8E0B8"
+    - name: Crop Field
+      size: 4x4
+      adjacency:
+        t: 1
+        r: 1
+        l: 1
+        b: 1
+      color: "#9FB89B"
+    - name: Mess Hall
+      size: 4x6
+      adjacency:
+        t: 0
+        r: 1
+        l: 0
+        b: 0
+      color: "#F0C9B8"
+    - name: Algae Farm
+      size: 4x6
+      adjacency:
+        t: 0
+        r: 1
+        l: 0
+        b: 0
+      color: "#A0D8C8"
+    - name: Algae Plantation
+      size: 4x6
+      adjacency:
+        t: 0
+        r: 1
+        l: 0
+        b: 0
+      color: "#B8D8B8"
+    - name: Mushroom Wall
+      size: 8x4
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#8BA88B"
+    - name: Water Treatment Center
+      size: 5x7
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#A8D8D0"
+
+  population:
+    - name: Cell Housing
+      size: 2x8
+      adjacency:
+        t: 1
+        r: 1
+        l: 1
+        b: 1
+      color: "#D9C9B8"
+    - name: Infirmary
+      size: 3x6
+      adjacency:
+        t: 0
+        r: 1
+        l: 0
+        b: 0
+      color: "#F0B8D0"
+    - name: Health Center
+      size: 8x8
+      adjacency:
+        t: 1
+        r: 1
+        l: 1
+        b: 1
+      color: "#F0A8C8"
+    - name: Quarters
+      size: 3x3
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#E8D9C8"
+    - name: Optimized Quarters
+      size: 3x6
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#E0D0C0"
+    - name: Cryonics Center
+      size: 5x7
+      adjacency:
+        t: 1
+        l: 0
+        r: 0
+        b: 0
+      color: "#B8D0E0"
+    - name: Exo-Fighting Dome
+      size: 14x14
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#F0B8C8"
+    - name: Hull Temple
+      size: 4x8
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#E8D9B8"
+    - name: Observatory
+      size: 12x3
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#B0C8E0"
+
+  maintenance:
+    - name: Battery T1
+      size: 3x3
+      adjacency:
+        t: 1
+        l: 1
+        r: 1
+        b: 1
+      color: "#E8B0A8"
+    - name: Stockpile
+      size: 4x4
+      adjacency:
+        t: 1
+        r: 0
+        l: 0
+        b: 0
+      color: "#C9B299"
+    - name: Stockpile Medium
+      size: 4x8
+      adjacency:
+        t: 1
+        r: 0
+        l: 0
+        b: 0
+      color: "#D9B8A8"
+    - name: Stockpile Large
+      size: 8x8
+      adjacency:
+        t: 1
+        r: 1
+        l: 1
+        b: 1
+      color: "#D9C4B0"
+    - name: Drone Bay
+      size: 8x8
+      adjacency:
+        t: 1
+        r: 1
+        l: 1
+        b: 1
+      color: "#B8C8D8"
+    - name: Workshop
+      size: 4x4
+      adjacency:
+        t: 1
+        r: 1
+        l: 1
+        b: 1
+      color: "#D0D0D0"
+    - name: Battery T2
+      size: 5x5
+      adjacency:
+        t: 1
+        r: 1
+        l: 1
+        b: 1
+      color: "#F0B8A8"
+    - name: Battery T3
+      size: 7x7
+      adjacency:
+        t: 1
+        r: 1
+        l: 1
+        b: 1
+      color: "#F0C0B0"
+

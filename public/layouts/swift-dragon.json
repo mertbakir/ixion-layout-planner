@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "id": "layout_1769458203124_e234qogmt",
+    "name": "swift-dragon",
+    "timestamp": 1769458203124,
+    "source": "user",
+    "exportedAt": 1769512941675
+  },
+  "data": {
+    "sectors": [
+      {
+        "buildings": [
+          {
+            "id": "building_1769458199940_nb3xv6mz5",
+            "buildingName": "Docking Bay",
+            "row": 21,
+            "col": 10,
+            "rotation": 0
+          },
+          {
+            "id": "building_1769458201441_xejjyiu6v",
+            "buildingName": "Docking Bay",
+            "row": 21,
+            "col": 34,
+            "rotation": 0
+          }
+        ],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      }
+    ],
+    "currentSector": 1
+  }
+}
