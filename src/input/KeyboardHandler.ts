@@ -8,7 +8,7 @@ import { ShortcutsModal } from '../ui/ShortcutsModal';
 
 type KeyHandler = () => void;
 
-const LONG_PRESS_DURATION = 1000; // milliseconds
+const LONG_PRESS_DURATION = 500; // milliseconds
 
 export class KeyboardHandler {
   private handlers: Map<string, KeyHandler>;
