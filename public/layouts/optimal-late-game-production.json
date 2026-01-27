@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "id": "optimal-late-game-production",
+    "name": "Optimal Late-Game Production Layout",
+    "timestamp": 1706300000002,
+    "source": "repository",
+    "author": "Community",
+    "description": "Late-game layout with factories and comprehensive production chain"
+  },
+  "data": {
+    "sectors": [
+      {
+        "buildings": [
+          {
+            "id": "building_1",
+            "buildingName": "Steel Mill",
+            "row": 0,
+            "col": 0,
+            "rotation": 0
+          }
+        ],
+        "roads": [
+          { "row": 7, "col": 0 },
+          { "row": 7, "col": 1 },
+          { "row": 7, "col": 2 },
+          { "row": 7, "col": 3 }
+        ]
+      },
+      {
+        "buildings": [
+          {
+            "id": "building_2",
+            "buildingName": "Electronics Factory",
+            "row": 0,
+            "col": 0,
+            "rotation": 0
+          }
+        ],
+        "roads": [
+          { "row": 7, "col": 0 },
+          { "row": 7, "col": 1 },
+          { "row": 7, "col": 2 }
+        ]
+      },
+      {
+        "buildings": [
+          {
+            "id": "building_3",
+            "buildingName": "Fusion Station",
+            "row": 2,
+            "col": 0,
+            "rotation": 0
+          }
+        ],
+        "roads": [
+          { "row": 8, "col": 0 },
+          { "row": 8, "col": 1 },
+          { "row": 8, "col": 2 }
+        ]
+      },
+      {
+        "buildings": [
+          {
+            "id": "building_4",
+            "buildingName": "Polymer Refinery",
+            "row": 1,
+            "col": 1,
+            "rotation": 0
+          }
+        ],
+        "roads": [
+          { "row": 7, "col": 0 },
+          { "row": 7, "col": 1 },
+          { "row": 7, "col": 2 }
+        ]
+      },
+      {
+        "buildings": [
+          {
+            "id": "building_5",
+            "buildingName": "Housing Complex",
+            "row": 0,
+            "col": 0,
+            "rotation": 0
+          },
+          {
+            "id": "building_6",
+            "buildingName": "Fire Station",
+            "row": 5,
+            "col": 3,
+            "rotation": 0
+          }
+        ],
+        "roads": [
+          { "row": 3, "col": 0 },
+          { "row": 3, "col": 1 },
+          { "row": 3, "col": 2 },
+          { "row": 3, "col": 3 }
+        ]
+      },
+      {
+        "buildings": [
+          {
+            "id": "building_7",
+            "buildingName": "Waste Center",
+            "row": 0,
+            "col": 5,
+            "rotation": 0
+          }
+        ],
+        "roads": [
+          { "row": 6, "col": 0 },
+          { "row": 6, "col": 1 },
+          { "row": 6, "col": 2 },
+          { "row": 6, "col": 3 },
+          { "row": 6, "col": 4 },
+          { "row": 6, "col": 5 }
+        ]
+      }
+    ],
+    "currentSector": 1
+  }
+}

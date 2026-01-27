@@ -401,6 +401,46 @@ canvas {
   border-color: #dd0000;
 }
 
+.layout-export {
+  background-color: #4a90e2;
+  border-color: #4a90e2;
+  color: #fff;
+}
+
+.layout-export:hover {
+  background-color: #5a9ff5;
+  border-color: #5a9ff5;
+}
+
+.layout-item.repository {
+  border: 2px solid #4a90e2;
+  background: rgba(74, 144, 226, 0.1);
+}
+
+.layout-section-header {
+  font-weight: bold;
+  margin: 16px 0 8px 0;
+  color: #888;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.layout-preview-tooltip {
+  position: fixed;
+  background: #2a2a2a;
+  border: 2px solid #4a90e2;
+  padding: 8px;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 10000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.layout-preview-tooltip img {
+  display: block;
+  image-rendering: pixelated;
+}
+
 .empty-message {
   text-align: center;
   color: #888;

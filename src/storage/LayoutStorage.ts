@@ -20,6 +20,9 @@ export interface SavedLayoutMetadata {
   id: string;
   name: string;
   timestamp: number;
+  source?: 'repository' | 'user';
+  author?: string;
+  description?: string;
 }
 
 export interface SavedLayout {
@@ -118,5 +121,31 @@ export class LayoutStorage {
 
   static getLayoutMetadata(): SavedLayoutMetadata[] {
     return this.getAllLayouts().map(l => l.metadata);
+  }
+
+  static exportLayoutAsJSON(layoutId: string): void {
+    const layout = this.loadLayout(layoutId);
+    if (!layout) return;
+
+    // Add export metadata
+    const exportData: SavedLayout = {
+      ...layout,
+      metadata: {
+        ...layout.metadata,
+        source: 'user',
+        exportedAt: Date.now()
+      } as SavedLayoutMetadata & { exportedAt?: number }
+    };
+
+    // Create blob and trigger download
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: 'application/json'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${layout.metadata.name.toLowerCase().replace(/\s+/g, '-')}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 }

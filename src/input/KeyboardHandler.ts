@@ -1,6 +1,8 @@
 import { AppState, PlacementMode } from '../state/AppState';
 import { BackgroundMusic } from '../audio/BackgroundMusic';
 import { LayoutStorage } from '../storage/LayoutStorage';
+import { RepositoryLayoutLoader } from '../storage/RepositoryLayoutLoader';
+import { LayoutPreviewGenerator } from '../ui/LayoutPreviewGenerator';
 import { NameGenerator } from '../utils/NameGenerator';
 import { ShortcutsModal } from '../ui/ShortcutsModal';
 
@@ -349,64 +351,52 @@ export class KeyboardHandler {
       return;
     }
 
-    const renderList = () => {
-      // Fetch fresh data each time the list is rendered
-      const layouts = LayoutStorage.getLayoutMetadata();
+    const renderList = async () => {
       listDiv.innerHTML = '';
 
-      if (layouts.length === 0) {
+      // Load both repository and user layouts
+      const repoLayouts = await RepositoryLayoutLoader.loadAllLayouts();
+      const userLayouts = LayoutStorage.getAllLayouts();
+
+      // Sort repository layouts alphabetically
+      repoLayouts.sort((a, b) => a.metadata.name.localeCompare(b.metadata.name));
+
+      // Sort user layouts by timestamp (newest first)
+      userLayouts.sort((a, b) => b.metadata.timestamp - a.metadata.timestamp);
+
+      const hasRepoLayouts = repoLayouts.length > 0;
+      const hasUserLayouts = userLayouts.length > 0;
+
+      if (!hasRepoLayouts && !hasUserLayouts) {
         const empty = document.createElement('div');
         empty.className = 'empty-message';
-        empty.textContent = 'No saved layouts yet';
+        empty.textContent = 'No layouts available';
         listDiv.appendChild(empty);
         return;
       }
 
-      for (const layout of layouts) {
-        const item = document.createElement('div');
-        item.className = 'layout-item';
+      // Render repository layouts section
+      if (hasRepoLayouts) {
+        const repoHeader = document.createElement('div');
+        repoHeader.className = 'layout-section-header';
+        repoHeader.textContent = 'REPOSITORY LAYOUTS (Read-Only)';
+        listDiv.appendChild(repoHeader);
 
-        const info = document.createElement('div');
-        info.className = 'layout-info';
+        for (const layout of repoLayouts) {
+          this.createLayoutItem(layout, true, listDiv, closeModal);
+        }
+      }
 
-        const name = document.createElement('div');
-        name.className = 'layout-name';
-        name.textContent = layout.name;
+      // Render user layouts section
+      if (hasUserLayouts) {
+        const userHeader = document.createElement('div');
+        userHeader.className = 'layout-section-header';
+        userHeader.textContent = 'YOUR LAYOUTS';
+        listDiv.appendChild(userHeader);
 
-        const date = document.createElement('div');
-        date.className = 'layout-date';
-        date.textContent = new Date(layout.timestamp).toLocaleString();
-
-        info.appendChild(name);
-        info.appendChild(date);
-
-        const actions = document.createElement('div');
-        actions.className = 'layout-actions';
-
-        const loadBtn = document.createElement('button');
-        loadBtn.className = 'layout-button layout-load';
-        loadBtn.textContent = 'Load';
-        loadBtn.addEventListener('click', () => {
-          // Close the current modal before showing the confirmation
-          closeModal();
-          this.loadLayoutWithConfirmation(layout.id);
-        });
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'layout-button layout-delete';
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.addEventListener('click', () => {
-          LayoutStorage.deleteLayout(layout.id);
-          renderList(); // Re-render the list with fresh data
-        });
-
-        actions.appendChild(loadBtn);
-        actions.appendChild(deleteBtn);
-
-        item.appendChild(info);
-        item.appendChild(actions);
-
-        listDiv.appendChild(item);
+        for (const layout of userLayouts) {
+          this.createLayoutItem(layout, false, listDiv, closeModal, () => renderList());
+        }
       }
     };
 
@@ -433,6 +423,97 @@ export class KeyboardHandler {
 
     renderList();
     modal.classList.remove('hidden');
+  }
+
+  private createLayoutItem(
+    layout: any,
+    isRepository: boolean,
+    container: HTMLElement,
+    closeModal: () => void,
+    onUpdate?: () => void
+  ): void {
+    const item = document.createElement('div');
+    item.className = `layout-item ${isRepository ? 'repository' : ''}`;
+
+    const info = document.createElement('div');
+    info.className = 'layout-info';
+
+    const name = document.createElement('div');
+    name.className = 'layout-name';
+    name.textContent = layout.metadata.name;
+
+    const date = document.createElement('div');
+    date.className = 'layout-date';
+    date.textContent = new Date(layout.metadata.timestamp).toLocaleString();
+
+    info.appendChild(name);
+    info.appendChild(date);
+
+    const actions = document.createElement('div');
+    actions.className = 'layout-actions';
+
+    const loadBtn = document.createElement('button');
+    loadBtn.className = 'layout-button layout-load';
+    loadBtn.textContent = 'Load';
+    loadBtn.addEventListener('click', () => {
+      closeModal();
+      this.loadLayoutWithConfirmation(layout.metadata.id);
+    });
+    actions.appendChild(loadBtn);
+
+    if (!isRepository) {
+      const exportBtn = document.createElement('button');
+      exportBtn.className = 'layout-button layout-export';
+      exportBtn.textContent = 'Export';
+      exportBtn.addEventListener('click', () => {
+        LayoutStorage.exportLayoutAsJSON(layout.metadata.id);
+      });
+      actions.appendChild(exportBtn);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'layout-button layout-delete';
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.addEventListener('click', () => {
+        LayoutStorage.deleteLayout(layout.metadata.id);
+        if (onUpdate) onUpdate();
+      });
+      actions.appendChild(deleteBtn);
+    }
+
+    item.appendChild(info);
+    item.appendChild(actions);
+
+    // Add preview hover functionality
+    let previewTooltip: HTMLElement | null = null;
+
+    item.addEventListener('mouseenter', () => {
+      const previewUrl = LayoutPreviewGenerator.generatePreview(layout);
+      if (!previewUrl) return;
+
+      previewTooltip = document.createElement('div');
+      previewTooltip.className = 'layout-preview-tooltip';
+
+      const img = document.createElement('img');
+      img.src = previewUrl;
+      img.alt = `Preview of ${layout.metadata.name}`;
+
+      previewTooltip.appendChild(img);
+      document.body.appendChild(previewTooltip);
+
+      // Position tooltip near item
+      const rect = item.getBoundingClientRect();
+      previewTooltip.style.left = (rect.right + 10) + 'px';
+      previewTooltip.style.top = rect.top + 'px';
+    });
+
+    item.addEventListener('mouseleave', () => {
+      if (previewTooltip && previewTooltip.parentNode) {
+        previewTooltip.parentNode.removeChild(previewTooltip);
+        previewTooltip = null;
+      }
+    });
+
+    container.appendChild(item);
   }
 
   private loadLayoutWithConfirmation(layoutId: string): void {

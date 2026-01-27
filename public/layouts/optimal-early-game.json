@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "id": "optimal-early-game",
+    "name": "Optimal Early Game Layout",
+    "timestamp": 1706300000000,
+    "source": "repository",
+    "author": "Community",
+    "description": "Efficient early-game layout focusing on basic food and housing"
+  },
+  "data": {
+    "sectors": [
+      {
+        "buildings": [
+          {
+            "id": "building_1",
+            "buildingName": "Crop Farm",
+            "row": 0,
+            "col": 0,
+            "rotation": 0
+          },
+          {
+            "id": "building_2",
+            "buildingName": "Insect Farm",
+            "row": 4,
+            "col": 0,
+            "rotation": 0
+          },
+          {
+            "id": "building_3",
+            "buildingName": "Housing Complex",
+            "row": 0,
+            "col": 4,
+            "rotation": 0
+          }
+        ],
+        "roads": [
+          { "row": 2, "col": 0 },
+          { "row": 2, "col": 1 },
+          { "row": 2, "col": 2 },
+          { "row": 2, "col": 3 },
+          { "row": 2, "col": 4 }
+        ]
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      },
+      {
+        "buildings": [],
+        "roads": []
+      }
+    ],
+    "currentSector": 1
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "layouts": [
+    "optimal-early-game.json",
+    "optimal-mid-game-science.json",
+    "optimal-late-game-production.json"
+  ]
+}
