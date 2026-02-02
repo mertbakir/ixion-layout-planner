@@ -40,6 +40,12 @@ body {
   align-items: center;
 }
 
+.header-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
 .header h1 {
   font-size: 24px;
 }
@@ -50,6 +56,29 @@ body {
   font-size: 14px;
   color: #aaa;
   align-items: center;
+}
+
+.keyboard-button {
+  background: none;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.keyboard-button:hover {
+  border-color: #00cc44;
+  color: #00cc44;
+  background-color: rgba(0, 204, 68, 0.1);
+}
+
+.keyboard-button:active {
+  background-color: rgba(0, 204, 68, 0.2);
 }
 
 .sector-compass {

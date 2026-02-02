@@ -5,12 +5,14 @@ import { InputManager } from './input/InputManager';
 import { ConstructionMenu } from './ui/ConstructionMenu';
 import { SectorIndicator } from './ui/SectorIndicator';
 import { LayoutStorage } from './storage/LayoutStorage';
+import { ShortcutsModal } from './ui/ShortcutsModal';
 
 let appState: AppState;
 let renderer: CanvasRenderer;
 let inputManager: InputManager;
 let constructionMenu: ConstructionMenu;
 let sectorIndicator: SectorIndicator;
+let shortcutsModal: ShortcutsModal;
 let gameLoopId: number;
 
 async function init(): Promise<void> {
@@ -47,6 +49,15 @@ async function init(): Promise<void> {
     if (closeBtn) {
       closeBtn.addEventListener('click', () => {
         constructionMenu.close();
+      });
+    }
+
+    // Initialize shortcuts modal and button
+    shortcutsModal = new ShortcutsModal();
+    const keyboardBtn = document.getElementById('keyboard-button');
+    if (keyboardBtn) {
+      keyboardBtn.addEventListener('click', () => {
+        shortcutsModal.toggle();
       });
     }
 

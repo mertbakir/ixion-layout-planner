@@ -10,6 +10,15 @@ export class ShortcutsModal {
     if (!this.modal) {
       console.error('Shortcuts modal element not found');
     }
+    this.setupEscapeHandler();
+  }
+
+  private setupEscapeHandler(): void {
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isOpen) {
+        this.close();
+      }
+    });
   }
 
   open(): void {
